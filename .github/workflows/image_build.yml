@@ -2,10 +2,8 @@ name: Image Build
 
 on:
     workflow_dispatch: {}
-    push:
-      branches:
-        - debug/php
 
+concurrency: ${{ github.workflow }}
 
 env:
   REPOSITORY_NAME: ghcr.io/totechite/grpc-docker
@@ -53,7 +51,7 @@ jobs:
             uses: docker/build-push-action@v6
             with:
               context: .
-              file: ./src/PHP/glibc/debian.Dockerfile
+              file: ./src/php/glibc/debian.Dockerfile
               build-args: |
                 PHP_BASEIMAGE_TAG=${{ matrix.base_image.base_image_tag }}
                 GRPC_VERSION=${{ matrix.grpc_ver }}
