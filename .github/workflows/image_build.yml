@@ -60,7 +60,7 @@ jobs:
               outputs: type=registry,push=true,oci-mediatypes=true,compression=zstd,compression-level=8
               tags: |
                 ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.os_ver }}
-                ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.glibc_ver }}
+                ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-glibc${{ matrix.base_image.glibc_ver }}
               platforms: |
                 linux/amd64
                 linux/arm64
