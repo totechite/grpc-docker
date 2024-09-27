@@ -66,8 +66,7 @@ jobs:
                 PHP_BASEIMAGE_TAG=${{ matrix.base_image.base_image_tag }}
                 GRPC_VERSION=${{ matrix.grpc_ver }}
                 GRPC_OUTPUT_PATH=${{ env.GRPC_OUTPUT_PATH }}
-              cache-from: type=gha
-              cache-to: type=gha,mode=max
+              cache-from: ${{ env.IMAGE_TAG_OSVER }}
               outputs: type=registry,push=true,oci-mediatypes=true,compression=zstd,compression-level=8
               tags: |
                 ${{ env.IMAGE_TAG_OSVER }}
