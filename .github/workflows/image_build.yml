@@ -3,6 +3,10 @@ name: Image Build
 on:
     workflow_dispatch: {}
 
+permissions:
+  contents: read
+  packages: write
+  
 concurrency: ${{ github.workflow }}
 
 env:
