@@ -47,6 +47,12 @@ jobs:
               username: ${{ github.actor }}
               password: ${{ secrets.GITHUB_TOKEN }}
 
+          - name: Set Environment Varriable
+            shell: bash
+            run: |
+              echo "IMAGE_TAG_OSVER=${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.os_ver }}" >> $GITHUB_ENV
+              echo "IMAGE_TAG_LIBCVER=${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-glibc${{ matrix.base_image.glibc_ver }}" >> $GITHUB_ENV
+
           - name: Build and push
             uses: docker/build-push-action@v6
             with:
@@ -56,11 +62,11 @@ jobs:
                 PHP_BASEIMAGE_TAG=${{ matrix.base_image.base_image_tag }}
                 GRPC_VERSION=${{ matrix.grpc_ver }}
                 GRPC_OUTPUT_PATH=${{ env.GRPC_OUTPUT_PATH }}
-              cache-from: ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.os_ver }}
+              cache-from: ${{ env.IMAGE_TAG_OSVER }}
               outputs: type=registry,push=true,oci-mediatypes=true,compression=zstd,compression-level=8
               tags: |
-                ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.os_ver }}
-                ${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-glibc${{ matrix.base_image.glibc_ver }}
+                ${{ env.IMAGE_TAG_OSVER }}
+                ${{ env.IMAGE_TAG_LIBCVER }}
               platforms: |
                 linux/amd64
                 linux/arm64
@@ -69,3 +75,15 @@ jobs:
                 grpc-version="${{ matrix.base_image.grpc_ver }}"
                 source="${{ github.repositoryUrl }}"
               provenance: true
+
+          - name: Run Trivy vulnerability scanner
+            uses: aquasecurity/trivy-action@0.24.0
+            with:
+              image-ref: ${{ env.IMAGE_TAG_OSVER }}
+              format: 'sarif'
+              output: 'trivy-results.sarif'
+
+          - name: Upload Trivy scan results to GitHub Security tab
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: 'trivy-results.sarif'
