@@ -22,5 +22,3 @@ FROM scratch
 
 ARG GRPC_OUTPUT_PATH
 COPY --from=build ${GRPC_OUTPUT_PATH} ${GRPC_OUTPUT_PATH}
-
-LABEL org.opencontainers.image.description "gRPC builded docker images"
