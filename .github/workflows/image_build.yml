@@ -73,4 +73,3 @@ jobs:
                 totechite.glib.version="${{ matrix.base_image.glibc_ver }}"
                 totechite.grpc.version="${{ matrix.grpc_ver }}"
                 org.opencontainers.image.source="${{ github.repositoryUrl }}"
-                org.opencontainers.image.description="gRPC builded docker images"

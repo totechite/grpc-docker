@@ -19,6 +19,8 @@ RUN MAKEFLAGS="-j $(nproc)" \
 RUN mv $(php-config --extension-dir)/grpc.so ${GRPC_OUTPUT_PATH}
 
 FROM scratch
-ARG GRPC_OUTPUT_PATH
 
+ARG GRPC_OUTPUT_PATH
 COPY --from=build ${GRPC_OUTPUT_PATH} ${GRPC_OUTPUT_PATH}
+
+LABEL org.opencontainers.image.description "gRPC builded docker images"
