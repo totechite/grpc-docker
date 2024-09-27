@@ -78,7 +78,6 @@ jobs:
                 totechite.grpc.version="${{ matrix.base_image.grpc_ver }}"
                 org.opencontainers.image.source="${{ github.repositoryUrl }}"
                 org.opencontainers.image.description="gRPC builded docker images"
-              provenance: true
 
           - name: Run Trivy vulnerability scanner
             uses: aquasecurity/trivy-action@0.24.0
