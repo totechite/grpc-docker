@@ -46,6 +46,13 @@ jobs:
               echo "IMAGE_TAG_OSVER=${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-${{ matrix.base_image.os_ver }}" >> $GITHUB_ENV
               echo "IMAGE_TAG_LIBCVER=${{ env.REPOSITORY_NAME }}:php-pecl-grpc${{ matrix.grpc_ver }}-glibc${{ matrix.base_image.glibc_ver }}" >> $GITHUB_ENV
 
+          - name: Login to Docker Hub
+            uses: docker/login-action@v3
+            with:
+              registry: ghcr.io
+              username: ${{ github.actor }}
+              password: ${{ secrets.GITHUB_TOKEN }}
+
           - name: Image Build
             uses: docker/build-push-action@v6
             with:
@@ -68,19 +75,6 @@ jobs:
                 totechite.grpc.version="${{ matrix.base_image.grpc_ver }}"
                 org.opencontainers.image.source="${{ github.repositoryUrl }}"
               provenance: true
-
-          - name: Login to Docker Hub
-            uses: docker/login-action@v3
-            with:
-              registry: ghcr.io
-              username: ${{ github.actor }}
-              password: ${{ secrets.GITHUB_TOKEN }}
-
-          - name: Image Push
-            shell: bash
-            run: |
-              docker push ${{ env.IMAGE_TAG_OSVER }}
-              docker push ${{ env.IMAGE_TAG_LIBCVER }}
 
           - name: Run Trivy vulnerability scanner
             uses: aquasecurity/trivy-action@0.24.0
