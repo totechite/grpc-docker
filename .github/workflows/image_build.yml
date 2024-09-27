@@ -69,7 +69,6 @@ jobs:
                 ${{ env.IMAGE_TAG_LIBCVER }}
               platforms: |
                 linux/amd64
-                linux/arm64
               labels: |
                 totechite.glib.version="${{ matrix.base_image.glibc_ver }}"
                 totechite.grpc.version="${{ matrix.base_image.grpc_ver }}"
