@@ -21,14 +21,8 @@ jobs:
             matrix:
                 base_image:
                     # https://hub.docker.com/_/php
-                    - { base_image_tag: "7.4-fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
-                    - { base_image_tag: "8.0-fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
-                    - { base_image_tag: "8.1-fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
-                    - { base_image_tag: "8.2-fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
-                    - { base_image_tag: "8.3-fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
-                    - { base_image_tag: "8.1-fpm-bookworm", os_ver: "bookworm",  glibc_ver: "2.36" }
-                    - { base_image_tag: "8.2-fpm-bookworm", os_ver: "bookworm",  glibc_ver: "2.36" }
-                    - { base_image_tag: "8.3-fpm-bookworm", os_ver: "bookworm",  glibc_ver: "2.36" }
+                    - { base_image_tag: "fpm-bullseye", os_ver: "bullseye",  glibc_ver: "2.31" }
+                    - { base_image_tag: "fpm-bookworm", os_ver: "bookworm",  glibc_ver: "2.36" }
                 grpc_ver:
                     # Refarence: https://pecl.php.net/package/grpc
                     - 1.66.0
@@ -74,20 +68,9 @@ jobs:
                 ${{ env.IMAGE_TAG_LIBCVER }}
               platforms: |
                 linux/amd64
+                linux/arm64
               labels: |
                 totechite.glib.version="${{ matrix.base_image.glibc_ver }}"
-                totechite.grpc.version="${{ matrix.base_image.grpc_ver }}"
+                totechite.grpc.version="${{ matrix.grpc_ver }}"
                 org.opencontainers.image.source="${{ github.repositoryUrl }}"
                 org.opencontainers.image.description="gRPC builded docker images"
-
-          - name: Run Trivy vulnerability scanner
-            uses: aquasecurity/trivy-action@0.24.0
-            with:
-              image-ref: ${{ env.IMAGE_TAG_OSVER }}
-              format: 'sarif'
-              output: 'trivy-results.sarif'
-
-          - name: Upload Trivy scan results to GitHub Security tab
-            uses: github/codeql-action/upload-sarif@v2
-            with:
-              sarif_file: 'trivy-results.sarif'
