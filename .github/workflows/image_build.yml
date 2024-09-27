@@ -71,9 +71,9 @@ jobs:
                 linux/amd64
                 linux/arm64
               labels: |
-                glib-version="${{ matrix.base_image.glibc_ver }}"
-                grpc-version="${{ matrix.base_image.grpc_ver }}"
-                source="${{ github.repositoryUrl }}"
+                totechite.glib.version="${{ matrix.base_image.glibc_ver }}"
+                totechite.grpc.version="${{ matrix.base_image.grpc_ver }}"
+                org.opencontainers.image.source="${{ github.repositoryUrl }}"
               provenance: true
 
           - name: Run Trivy vulnerability scanner
