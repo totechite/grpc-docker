@@ -63,6 +63,7 @@ jobs:
                 GRPC_OUTPUT_PATH=${{ env.GRPC_OUTPUT_PATH }}
               cache-from: ${{ env.IMAGE_TAG_OSVER }}
               outputs: type=registry,push=true,oci-mediatypes=true,annotation-index.org.opencontainers.image.description="gRPC builded docker images",compression=zstd,compression-level=8
+              provenance: false
               tags: |
                 ${{ env.IMAGE_TAG_OSVER }}
                 ${{ env.IMAGE_TAG_LIBCVER }}
