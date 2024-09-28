@@ -62,7 +62,7 @@ jobs:
                 GRPC_VERSION=${{ matrix.grpc_ver }}
                 GRPC_OUTPUT_PATH=${{ env.GRPC_OUTPUT_PATH }}
               cache-from: ${{ env.IMAGE_TAG_OSVER }}
-              outputs: type=registry,push=true,oci-mediatypes=true,annotation-index.org.opencontainers.image.description="gRPC builded docker images",compression=zstd,compression-level=8
+              outputs: type=registry,push=true,oci-mediatypes=true,compression=zstd,compression-level=8
               provenance: false
               tags: |
                 ${{ env.IMAGE_TAG_OSVER }}
@@ -74,3 +74,4 @@ jobs:
                 totechite.glib.version="${{ matrix.base_image.glibc_ver }}"
                 totechite.grpc.version="${{ matrix.grpc_ver }}"
                 org.opencontainers.image.source="${{ github.repositoryUrl }}"
+                org.opencontainers.image.description="gRPC builded docker images"
