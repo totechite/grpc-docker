@@ -18,7 +18,7 @@ FROM php:8.3-fpm-bookworm
 
 ### Get grpc.so without a wait time during building process.
 COPY --from=ghcr.io/totechite/grpc-docker:php-pecl-grpc1.66.0-bookworm /usr/local/lib/php/extensions/grpc.so /tmp/grpc.so
-RUN mv /tmp/grpc.so $(php-config --extension-dir)/grpc.so
+RUN mv /tmp/grpc.so $(php-config --extension-dir)/grpc.so && docker-php-ext-enable grpc
 ```
 
 
