@@ -41,12 +41,13 @@ RUN mv /tmp/grpc.so $(php-config --extension-dir)/grpc.so
 - Tag Format
   - `<gRPC Version Prefix>-<libc Environment Suffix>`
 
-| gRPC Version Prefixes | libc Environment Suffixes                |
-| --------------------- | ---------------------------------------- |
-| php-pecl-grpc1.66.0   | glibc2.31, bullseye, glibc2.36, bookworm |
-| php-pecl-grpc1.65.5   | glibc2.31, bullseye, glibc2.36, bookworm |
-| php-pecl-grpc1.64.1   | glibc2.31, bullseye, glibc2.36, bookworm |
+| PHP Version Prefixes | gRPC Version Infixes | libc Environment Suffixes |
+| -------------------- | -------------------- | --------------------------|
+| php7.4-pecl          | grpc1.64.1           | glibc2.31                 |
+| php8.0-pecl          | grpc1.65.5           | bullseye                  |
+| php8.1-pecl          | grpc1.66.0           | glibc2.36                 |
+| php8.2-pecl          |                      | bookworm                  |
+| php8.3-pecl          |                      |                           |
 
 - Example of full image name
-  - `ghcr.io/totechite/grpc-docker:php-pecl-grpc1.66.0-glibc2.36`
-  - `ghcr.io/totechite/grpc-docker:php-pecl-grpc1.66.0-bookworm`
+  - `ghcr.io/totechite/grpc-docker:php8.3-pecl-grpc1.66.0-bookworm`
