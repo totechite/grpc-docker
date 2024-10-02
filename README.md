@@ -17,7 +17,7 @@ FROM php:8.3-fpm-bookworm
 # RUN pecl install grpc
 
 ### Get grpc.so without a wait time during building process.
-COPY --from=ghcr.io/totechite/grpc-docker:php-pecl-grpc1.66.0-bookworm /usr/local/lib/php/extensions/grpc.so /tmp/grpc.so
+COPY --from=ghcr.io/totechite/grpc-docker:php8.3-pecl-grpc1.66.0-bookworm /usr/local/lib/php/extensions/grpc.so /tmp/grpc.so
 RUN mv /tmp/grpc.so $(php-config --extension-dir)/grpc.so && docker-php-ext-enable grpc
 ```
 
@@ -39,7 +39,7 @@ RUN mv /tmp/grpc.so $(php-config --extension-dir)/grpc.so && docker-php-ext-enab
 #### PHP
 
 - Tag Format
-  - `<gRPC Version Prefix>-<libc Environment Suffix>`
+  - `<PHP Version Prefix>-<gRPC Version Infix>-<libc Environment Suffix>`
 
 | PHP Version Prefixes | gRPC Version Infixes | libc Environment Suffixes |
 | -------------------- | -------------------- | --------------------------|
