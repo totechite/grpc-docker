@@ -29,9 +29,11 @@ jobs:
             uses: actions/checkout@v4
 
           - name: Up gRPC Server
-            run: cd test/server-connection && docker compose up -d
+            working-directory: test/server-connection
+            run: docker compose up -d
 
           - name: Request by Client
+            working-directory: test/server-connection
             env:
               PHP_BASEIMAGE_TAG: ${{ matrix.base_image.php_ver }}-fpm-${{ matrix.base_image.os_ver }}
               GRPC_VERSION: ${{ matrix.grpc_ver }}
